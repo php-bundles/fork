@@ -100,8 +100,8 @@ If you call method `wait`, the current process (main) will wait while all child 
 [testing-image]: https://travis-ci.org/symfony-bundles/fork-bundle.svg?branch=master
 [stable-image]: https://poser.pugx.org/symfony-bundles/fork-bundle/v/stable
 [downloads-image]: https://poser.pugx.org/symfony-bundles/fork-bundle/downloads
-[sensiolabs-insight-link]: https://insight.sensiolabs.com/projects/d4b8a2dc-0b99-4111-aa3b-c7b4df469615
-[sensiolabs-insight-image]: https://insight.sensiolabs.com/projects/d4b8a2dc-0b99-4111-aa3b-c7b4df469615/big.png
+[sensiolabs-insight-link]: https://insight.sensiolabs.com/projects/3c06a421-5b07-4768-84a3-091db57fb556
+[sensiolabs-insight-image]: https://insight.sensiolabs.com/projects/3c06a421-5b07-4768-84a3-091db57fb556/big.png
 [code-coverage-link]: https://scrutinizer-ci.com/g/symfony-bundles/fork-bundle/?branch=master
 [code-coverage-image]: https://scrutinizer-ci.com/g/symfony-bundles/fork-bundle/badges/coverage.png?b=master
 [scrutinizer-code-quality-link]: https://scrutinizer-ci.com/g/symfony-bundles/fork-bundle/?branch=master
