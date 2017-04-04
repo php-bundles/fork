@@ -1,5 +1,5 @@
-Symfony Fork Bundle
-===================
+SymfonyBundlesForkBundle
+========================
 
 [![SensioLabsInsight][sensiolabs-insight-image]][sensiolabs-insight-link]
 
