@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 class ForkExtension extends ConfigurableExtension
 {
-
     /**
      * {@inheritdoc}
      */
@@ -38,5 +37,4 @@ class ForkExtension extends ConfigurableExtension
     {
         return 'sb_fork';
     }
-
 }

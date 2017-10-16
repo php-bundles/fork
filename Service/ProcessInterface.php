@@ -4,7 +4,6 @@ namespace SymfonyBundles\ForkBundle\Service;
 
 interface ProcessInterface
 {
-
     /**
      * @var int The maximum quantity of created child processes.
      */

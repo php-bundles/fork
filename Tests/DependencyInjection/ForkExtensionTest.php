@@ -9,7 +9,6 @@ use SymfonyBundles\ForkBundle\DependencyInjection\ForkExtension;
 
 class ForkExtensionTest extends TestCase
 {
-
     public function testExtension()
     {
         $this->assertInstanceOf(Extension::class, new ForkExtension());
@@ -37,5 +36,4 @@ class ForkExtensionTest extends TestCase
 
         $this->assertStringEndsWith('fork', $extension->getAlias());
     }
-
 }

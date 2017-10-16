@@ -4,7 +4,6 @@ namespace SymfonyBundles\ForkBundle\Service;
 
 interface ForkInterface
 {
-
     /**
      * Checks the availability of task in a pool.
      *
