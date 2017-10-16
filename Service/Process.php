@@ -4,7 +4,6 @@ namespace SymfonyBundles\ForkBundle\Service;
 
 class Process implements ProcessInterface
 {
-
     /**
      * @var int
      */
@@ -33,7 +32,7 @@ class Process implements ProcessInterface
      */
     public function create(\Closure $closure)
     {
-        for ($i = 0; $i < $this->size; $i++) {
+        for ($i = 0; $i < $this->size; ++$i) {
             if ($this->fork()) {
                 $closure();
 
@@ -75,5 +74,4 @@ class Process implements ProcessInterface
     {
         return posix_kill(getmypid(), SIGKILL);
     }
-
 }

@@ -8,15 +8,14 @@ use SymfonyBundles\ForkBundle\Service\ProcessInterface;
 
 class ProcessTest extends TestCase
 {
-
     public function testInterface()
     {
-        $this->assertInstanceOf(ProcessInterface::class, new Process);
+        $this->assertInstanceOf(ProcessInterface::class, new Process());
     }
 
     public function testSize()
     {
-        $process = new Process;
+        $process = new Process();
         $reflection = new \ReflectionObject($process);
         $property = $reflection->getProperty('size');
 
@@ -46,7 +45,7 @@ class ProcessTest extends TestCase
 
         $size = mt_rand(1, ProcessInterface::MAX_QUANTITY_PROCESESS);
 
-        $process->size($size)->create(function() use($filename) {
+        $process->size($size)->create(function () use ($filename) {
             file_put_contents($filename, file_get_contents($filename) + 1);
         })->wait();
 
@@ -61,9 +60,7 @@ class ProcessTest extends TestCase
 
         $process->method('fork')->willReturn(true);
 
-        $process->create(function() {
-            //
+        $process->create(function () {
         });
     }
-
 }

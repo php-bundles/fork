@@ -6,7 +6,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SymfonyBundlesForkBundle extends Bundle
 {
-
     /**
      * {@inheritdoc}
      */
@@ -14,5 +13,4 @@ class SymfonyBundlesForkBundle extends Bundle
     {
         return new DependencyInjection\ForkExtension();
     }
-
 }

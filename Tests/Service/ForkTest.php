@@ -2,15 +2,14 @@
 
 namespace SymfonyBundles\ForkBundle\Tests\Service;
 
-use SymfonyBundles\ForkBundle\Tests\TestCase;
 use SymfonyBundles\ForkBundle\Service\Fork;
+use SymfonyBundles\ForkBundle\Tests\TestCase;
 use SymfonyBundles\ForkBundle\Service\Process;
 use SymfonyBundles\ForkBundle\Tests\Task\DemoTask;
 use SymfonyBundles\ForkBundle\Service\ForkInterface;
 
 class ForkTest extends TestCase
 {
-
     public function testInterface()
     {
         $this->assertInstanceOf(ForkInterface::class, $this->getFork());
@@ -18,13 +17,13 @@ class ForkTest extends TestCase
 
     public function testTasksPoll()
     {
-        $task = new DemoTask;
+        $task = new DemoTask();
         $fork = $this->getFork();
 
-        $fork->attach(new DemoTask)->attach($task);
+        $fork->attach(new DemoTask())->attach($task);
 
         $this->assertTrue($fork->exists($task));
-        $this->assertFalse($fork->exists(new DemoTask));
+        $this->assertFalse($fork->exists(new DemoTask()));
 
         $this->assertFalse($fork->detach($task)->exists($task));
 
@@ -42,9 +41,9 @@ class ForkTest extends TestCase
         $fork = new Fork($process);
 
         $fork
-            ->attach(new DemoTask)
-            ->attach(new DemoTask)
-            ->attach(new DemoTask);
+            ->attach(new DemoTask())
+            ->attach(new DemoTask())
+            ->attach(new DemoTask());
 
         $fork->run();
     }
@@ -54,7 +53,6 @@ class ForkTest extends TestCase
      */
     private function getFork()
     {
-        return new Fork(new Process);
+        return new Fork(new Process());
     }
-
 }

@@ -40,8 +40,8 @@ Defaults configuration:
 ``` yml
 sb_fork:
     class:
-        fork: "SymfonyBundles\ForkBundle\Service\Fork"
-        process: "SymfonyBundles\ForkBundle\Service\Process"
+        fork: 'SymfonyBundles\ForkBundle\Service\Fork'
+        process: 'SymfonyBundles\ForkBundle\Service\Process'
 ```
 
 How to use (only cli-mode)
@@ -51,6 +51,7 @@ Gets the fork service:
 
 ``` php
 $fork = $this->getContainer()->get('sb_fork');
+
 // or `get('fork')`, fork - defaults alias for service
 $fork = $this->getContainer()->get('fork');
 ```
@@ -65,28 +66,28 @@ use SymfonyBundles\ForkBundle\Service\TaskInterface;
 
 class DemoTask implements TaskInterface
 {
-
     public function execute()
     {
         echo "Hello World!\n";
     }
-
 }
 ```
 
 Now that the task is created, you can execute her in a plurality processes:
 
 ``` php
-$task = new \AppBundle\Task\DemoTask();
+use AppBundle\Task\DemoTask;
+
+$task = new DemoTask();
 
 $fork->attach($task)->run(4)->wait(); // 4 - this is number of subprocesses
 ```
 
 And another example:
 ``` php
-$task1 = new \AppBundle\Task\DemoTask();
-$task2 = new \AppBundle\Task\DemoTask();
-$task3 = new \AppBundle\Task\DemoTask();
+$task1 = new DemoTask();
+$task2 = new DemoTask();
+$task3 = new DemoTask();
 
 $fork->attach($task1)->attach($task2)->attach($task3)->run()->wait(); // defaults number of subprocesses is 8
 ```

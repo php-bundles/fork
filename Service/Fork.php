@@ -4,7 +4,6 @@ namespace SymfonyBundles\ForkBundle\Service;
 
 class Fork implements ForkInterface
 {
-
     /**
      * @var array
      */
@@ -61,7 +60,7 @@ class Fork implements ForkInterface
      */
     public function each()
     {
-        return function() {
+        return function () {
             foreach ($this->tasks as $i => $task) {
                 $task->execute($i);
             }
@@ -75,5 +74,4 @@ class Fork implements ForkInterface
     {
         return $this->process->size($size)->create($this->each());
     }
-
 }
