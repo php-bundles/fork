@@ -89,7 +89,7 @@ class Process implements ProcessInterface
      *
      * @return bool
      */
-    public function terminate(): bool
+    protected function terminate(): bool
     {
         if ($this->isAllowedFork) {
             return posix_kill(getmypid(), SIGKILL);
@@ -100,6 +100,8 @@ class Process implements ProcessInterface
 
     /**
      * Returns the optimal number of child processes.
+     *
+     * @codeCoverageIgnore
      *
      * @return int
      */
