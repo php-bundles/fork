@@ -1,6 +1,6 @@
 <?php
 
-namespace SymfonyBundles\ForkBundle\Tests\Service;
+namespace SymfonyBundles\ForkBundle\Tests\Fork;
 
 use SymfonyBundles\ForkBundle\Fork;
 use SymfonyBundles\ForkBundle\Tests\Fixtures;

@@ -2,7 +2,7 @@
 
 namespace SymfonyBundles\ForkBundle\DependencyInjection;
 
-use SymfonyBundles\ForkBundle\Service;
+use SymfonyBundles\ForkBundle\Fork;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -21,8 +21,8 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('class')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('fork')->defaultValue(Service\Fork::class)->end()
-                        ->scalarNode('process')->defaultValue(Service\Process::class)->end()
+                        ->scalarNode('fork')->defaultValue(Fork\Fork::class)->end()
+                        ->scalarNode('process')->defaultValue(Fork\Process::class)->end()
                     ->end()
                 ->end()
             ->end();
