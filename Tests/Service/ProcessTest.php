@@ -2,38 +2,37 @@
 
 namespace SymfonyBundles\ForkBundle\Tests\Service;
 
+use SymfonyBundles\ForkBundle\Fork;
 use SymfonyBundles\ForkBundle\Tests\TestCase;
-use SymfonyBundles\ForkBundle\Service\Process;
-use SymfonyBundles\ForkBundle\Service\ProcessInterface;
 
 class ProcessTest extends TestCase
 {
     public function testInterface()
     {
-        $this->assertInstanceOf(ProcessInterface::class, new Process());
+        $this->assertInstanceOf(Fork\ProcessInterface::class, new Fork\Process());
     }
 
-    public function testSize()
+    public function testProcessesCount()
     {
-        $process = new Process();
+        $process = new Fork\Process();
         $reflection = new \ReflectionObject($process);
-        $property = $reflection->getProperty('size');
+        $property = $reflection->getProperty('processesCount');
 
         $property->setAccessible(true);
 
-        $process->size(-123);
+        $process->setCountOfChildProcesses(-123);
         $this->assertSame(1, $property->getValue($process));
 
-        $process->size(ProcessInterface::MAX_QUANTITY_PROCESESS + 1);
-        $this->assertSame(ProcessInterface::MAX_QUANTITY_PROCESESS, $property->getValue($process));
+        $process->setCountOfChildProcesses(Fork\ProcessInterface::MAX_PROCESSES_QUANTITY + 1);
+        $this->assertSame(Fork\ProcessInterface::MAX_PROCESSES_QUANTITY, $property->getValue($process));
 
-        $process->size(8);
+        $process->setCountOfChildProcesses(8);
         $this->assertSame(8, $property->getValue($process));
     }
 
     public function testCreate()
     {
-        $process = $this->getMockBuilder(Process::class)
+        $process = $this->getMockBuilder(Fork\Process::class)
             ->setMethods(['fork', 'terminate'])
             ->getMock();
 
@@ -43,18 +42,18 @@ class ProcessTest extends TestCase
 
         file_put_contents($filename, 0);
 
-        $size = mt_rand(1, ProcessInterface::MAX_QUANTITY_PROCESESS);
+        $processesCount = mt_rand(1, Fork\ProcessInterface::MAX_PROCESSES_QUANTITY);
 
-        $process->size($size)->create(function () use ($filename) {
+        $process->setCountOfChildProcesses($processesCount)->create(function () use ($filename) {
             file_put_contents($filename, file_get_contents($filename) + 1);
         })->wait();
 
-        $this->assertEquals($size, file_get_contents($filename));
+        $this->assertEquals($processesCount, file_get_contents($filename));
     }
 
     public function testFakeChild()
     {
-        $process = $this->getMockBuilder(Process::class)
+        $process = $this->getMockBuilder(Fork\Process::class)
             ->setMethods(['fork', 'terminate'])
             ->getMock();
 

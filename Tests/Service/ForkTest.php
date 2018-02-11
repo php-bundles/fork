@@ -2,28 +2,26 @@
 
 namespace SymfonyBundles\ForkBundle\Tests\Service;
 
-use SymfonyBundles\ForkBundle\Service\Fork;
+use SymfonyBundles\ForkBundle\Fork;
+use SymfonyBundles\ForkBundle\Tests\Fixtures;
 use SymfonyBundles\ForkBundle\Tests\TestCase;
-use SymfonyBundles\ForkBundle\Service\Process;
-use SymfonyBundles\ForkBundle\Tests\Task\DemoTask;
-use SymfonyBundles\ForkBundle\Service\ForkInterface;
 
 class ForkTest extends TestCase
 {
     public function testInterface()
     {
-        $this->assertInstanceOf(ForkInterface::class, $this->getFork());
+        $this->assertInstanceOf(Fork\ForkInterface::class, new Fork\Fork(new Fork\Process()));
     }
 
     public function testTasksPoll()
     {
-        $task = new DemoTask();
-        $fork = $this->getFork();
+        $task = new Fixtures\Task\DemoTask();
+        $fork = new Fork\Fork(new Fork\Process());
 
-        $fork->attach(new DemoTask())->attach($task);
+        $fork->attach(new Fixtures\Task\DemoTask())->attach($task);
 
         $this->assertTrue($fork->exists($task));
-        $this->assertFalse($fork->exists(new DemoTask()));
+        $this->assertFalse($fork->exists(new Fixtures\Task\DemoTask()));
 
         $this->assertFalse($fork->detach($task)->exists($task));
 
@@ -32,27 +30,19 @@ class ForkTest extends TestCase
 
     public function testTasksExecuting()
     {
-        $process = $this->getMockBuilder(Process::class)
+        $process = $this->getMockBuilder(Fork\Process::class)
             ->setMethods(['fork', 'terminate'])
             ->getMock();
 
         $process->method('fork')->willReturn(true);
 
-        $fork = new Fork($process);
+        $fork = new Fork\Fork($process);
 
         $fork
-            ->attach(new DemoTask())
-            ->attach(new DemoTask())
-            ->attach(new DemoTask());
+            ->attach(new Fixtures\Task\DemoTask())
+            ->attach(new Fixtures\Task\DemoTask())
+            ->attach(new Fixtures\Task\DemoTask());
 
         $fork->run();
-    }
-
-    /**
-     * @return Fork
-     */
-    private function getFork()
-    {
-        return new Fork(new Process());
     }
 }

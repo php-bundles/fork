@@ -1,6 +1,6 @@
 <?php
 
-namespace SymfonyBundles\ForkBundle\Service;
+namespace SymfonyBundles\ForkBundle\Fork;
 
 class Fork implements ForkInterface
 {
@@ -26,7 +26,7 @@ class Fork implements ForkInterface
     /**
      * {@inheritdoc}
      */
-    public function exists(TaskInterface $task)
+    public function exists(TaskInterface $task): bool
     {
         return false !== in_array($task, $this->tasks, true);
     }
@@ -34,7 +34,7 @@ class Fork implements ForkInterface
     /**
      * {@inheritdoc}
      */
-    public function attach(TaskInterface $task)
+    public function attach(TaskInterface $task): ForkInterface
     {
         $this->tasks[] = $task;
 
@@ -44,7 +44,7 @@ class Fork implements ForkInterface
     /**
      * {@inheritdoc}
      */
-    public function detach(TaskInterface $task)
+    public function detach(TaskInterface $task): ForkInterface
     {
         if ($this->exists($task)) {
             $key = array_search($task, $this->tasks, true);
@@ -58,11 +58,11 @@ class Fork implements ForkInterface
     /**
      * {@inheritdoc}
      */
-    public function each()
+    public function each(): \Closure
     {
         return function () {
-            foreach ($this->tasks as $i => $task) {
-                $task->execute($i);
+            foreach ($this->tasks as $task) {
+                $task->execute();
             }
         };
     }
@@ -70,8 +70,8 @@ class Fork implements ForkInterface
     /**
      * {@inheritdoc}
      */
-    public function run($size = ProcessInterface::DEFAULT_QUANTITY_PROCESESS)
+    public function run(int $processesCount = ProcessInterface::AUTO_DETECT_OF_PROCESSES_QUANTITY): ProcessInterface
     {
-        return $this->process->size($size)->create($this->each());
+        return $this->process->setCountOfChildProcesses($processesCount)->create($this->each());
     }
 }
