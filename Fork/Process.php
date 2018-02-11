@@ -105,20 +105,16 @@ class Process implements ProcessInterface
      */
     protected function getOptimalNumberOfChildProcesses(): int
     {
-        $os = strtolower(trim(PHP_OS));
         $coreNumber = 1;
+        $detectCommand = [
+            'linux' => 'cat /proc/cpuinfo | grep processor | wc -l',
+            'freebsd' => 'sysctl -a | grep "hw.ncpu" | cut -d ":" -f2',
+        ];
 
-        switch ($os) {
-            case 'linux':
-                $cmd = 'cat /proc/cpuinfo | grep processor | wc -l';
-                break;
-            case 'freebsd':
-                $cmd = 'sysctl -a | grep "hw.ncpu" | cut -d ":" -f2';
-                break;
-        }
+        $os = strtolower(trim(PHP_OS));
 
-        if (isset($cmd)) {
-            $coreNumber = intval(trim(shell_exec($cmd)));
+        if (isset($detectCommand[$os])) {
+            $coreNumber = intval(trim(shell_exec($detectCommand[$os])));
         }
 
         return $coreNumber;

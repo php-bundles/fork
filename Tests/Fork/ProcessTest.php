@@ -16,18 +16,27 @@ class ProcessTest extends TestCase
     {
         $process = new Fork\Process();
         $reflection = new \ReflectionObject($process);
-        $property = $reflection->getProperty('processesCount');
 
-        $property->setAccessible(true);
+        $processesCount = $reflection->getProperty('processesCount');
+        $processesCount->setAccessible(true);
+
+        $isAllowedFork = $reflection->getProperty('isAllowedFork');
+        $isAllowedFork->setAccessible(true);
+        $isAllowedFork->getValue($process);
 
         $process->setCountOfChildProcesses(1);
-        $this->assertSame(1, $property->getValue($process));
+        $this->assertSame(1, $processesCount->getValue($process));
 
         $process->setCountOfChildProcesses(Fork\ProcessInterface::MAX_PROCESSES_QUANTITY + 1);
-        $this->assertSame(Fork\ProcessInterface::MAX_PROCESSES_QUANTITY, $property->getValue($process));
+
+        if ($isAllowedFork->getValue($process)) {
+            $this->assertSame(Fork\ProcessInterface::MAX_PROCESSES_QUANTITY, $processesCount->getValue($process));
+        } else {
+            $this->assertSame(1, $processesCount->getValue($process));
+        }
 
         $process->setCountOfChildProcesses(8);
-        $this->assertSame(function_exists('pcntl_fork') ? 8 : 1, $property->getValue($process));
+        $this->assertSame(function_exists('pcntl_fork') ? 8 : 1, $processesCount->getValue($process));
     }
 
     public function testCreate()
@@ -62,5 +71,20 @@ class ProcessTest extends TestCase
         $process->create(function () {
             $this->assertTrue(true);
         });
+    }
+
+    public function testForkDisabled()
+    {
+        $process = new Fork\Process();
+        $reflection = new \ReflectionObject($process);
+
+        $property = $reflection->getProperty('isAllowedFork');
+        $property->setAccessible(true);
+        $property->setValue($process, false);
+
+        $method = $reflection->getMethod('fork');
+        $method->setAccessible(true);
+
+        $this->assertTrue($method->invoke($process));
     }
 }

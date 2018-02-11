@@ -20,7 +20,7 @@ interface ForkInterface
      *
      * @return self
      */
-    public function attach(TaskInterface $task): self;
+    public function attach(TaskInterface $task): ForkInterface;
 
     /**
      * Detaches the task from a pool.
@@ -29,7 +29,7 @@ interface ForkInterface
      *
      * @return self
      */
-    public function detach(TaskInterface $task): self;
+    public function detach(TaskInterface $task): ForkInterface;
 
     /**
      * Return a function which executes the attached tasks.
