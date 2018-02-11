@@ -13,7 +13,7 @@ class DemoTask extends Fork\Task
         return $this->isExecuted;
     }
 
-    public function execute(): void
+    public function execute()
     {
         $this->isExecuted = true;
 

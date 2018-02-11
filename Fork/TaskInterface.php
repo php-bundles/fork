@@ -7,5 +7,5 @@ interface TaskInterface
     /**
      * Executes a task.
      */
-    public function execute(): void;
+    public function execute();
 }
