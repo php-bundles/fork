@@ -1,7 +1,7 @@
 {
     "name": "symfony-bundles/fork",
     "type": "library",
-    "description": "Fork Library",
+    "description": "SymfonyBundles Fork Library",
     "keywords": ["fork", "library"," flow", "process", "multiprocesses", "thread", "symfony"],
     "homepage": "https://github.com/symfony-bundles/fork",
     "license": "MIT",
