@@ -60,19 +60,6 @@ class ProcessTest extends TestCase
         $this->assertEquals($processesCount, file_get_contents($filename));
     }
 
-    public function testFakeChild()
-    {
-        $process = $this->getMockBuilder(Fork\Process::class)
-            ->setMethods(['fork', 'terminate'])
-            ->getMock();
-
-        $process->method('fork')->willReturn(true);
-
-        $process->create(function () {
-            $this->assertTrue(true);
-        });
-    }
-
     public function testForkDisabled()
     {
         $process = new Fork\Process();
