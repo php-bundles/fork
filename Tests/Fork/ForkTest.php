@@ -39,10 +39,14 @@ class ForkTest extends TestCase
         $fork = new Fork\Fork($process);
 
         $fork
-            ->attach(new Fixtures\Task\DemoTask())
-            ->attach(new Fixtures\Task\DemoTask())
-            ->attach(new Fixtures\Task\DemoTask());
+            ->attach($task1 = new Fixtures\Task\DemoTask())
+            ->attach($task2 = new Fixtures\Task\DemoTask())
+            ->attach($task3 = new Fixtures\Task\DemoTask());
 
         $fork->run();
+
+        $this->assertTrue($task1->isExecuted());
+        $this->assertTrue($task2->isExecuted());
+        $this->assertTrue($task3->isExecuted());
     }
 }

@@ -59,7 +59,12 @@ class ProcessTest extends TestCase
 
         $process->method('fork')->willReturn(true);
 
-        $process->create(function () {
+        $isExecuted = false;
+
+        $process->create(function () use (&$isExecuted) {
+            $isExecuted = true;
         });
+
+        $this->assertTrue($isExecuted);
     }
 }
