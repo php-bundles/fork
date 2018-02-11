@@ -1,6 +1,6 @@
 <?php
 
-namespace SymfonyBundles\ForkBundle\Fork;
+namespace SymfonyBundles\Fork;
 
 class Process implements ProcessInterface
 {

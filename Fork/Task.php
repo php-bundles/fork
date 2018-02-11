@@ -1,6 +1,6 @@
 <?php
 
-namespace SymfonyBundles\ForkBundle\Fork;
+namespace SymfonyBundles\Fork;
 
 abstract class Task implements TaskInterface
 {
@@ -10,21 +10,18 @@ abstract class Task implements TaskInterface
     protected $iterations = 100;
 
     /**
-     * @var int Number of iterations to perform garbage cleaning
-     */
-    private $currentIteration = 0;
-
-    /**
      * Performs garbage collection when the iteration limit is reached.
      */
     protected function iterate(): void
     {
+        static $currentIteration = 0;
+
         if (false === gc_enabled()) {
             gc_enable();
         }
 
-        if (++$this->currentIteration >= $this->iterations) {
-            $this->currentIteration = 0;
+        if (++$currentIteration >= $this->iterations) {
+            $currentIteration = 0;
 
             gc_collect_cycles();
         }

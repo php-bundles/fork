@@ -1,10 +1,10 @@
 <?php
 
-namespace SymfonyBundles\ForkBundle\Tests\Fork;
+namespace SymfonyBundles\Tests\Fork;
 
-use SymfonyBundles\ForkBundle\Fork;
-use SymfonyBundles\ForkBundle\Tests\Fixtures;
-use SymfonyBundles\ForkBundle\Tests\TestCase;
+use SymfonyBundles\Fork;
+use PHPUnit\Framework\TestCase;
+use SymfonyBundles\Tests\Task\DemoTask;
 
 class ForkTest extends TestCase
 {
@@ -15,13 +15,13 @@ class ForkTest extends TestCase
 
     public function testTasksPoll()
     {
-        $task = new Fixtures\Task\DemoTask();
+        $task = new DemoTask();
         $fork = new Fork\Fork(new Fork\Process());
 
-        $fork->attach(new Fixtures\Task\DemoTask())->attach($task);
+        $fork->attach(new DemoTask())->attach($task);
 
         $this->assertTrue($fork->exists($task));
-        $this->assertFalse($fork->exists(new Fixtures\Task\DemoTask()));
+        $this->assertFalse($fork->exists(new DemoTask()));
 
         $this->assertFalse($fork->detach($task)->exists($task));
 
@@ -39,9 +39,9 @@ class ForkTest extends TestCase
         $fork = new Fork\Fork($process);
 
         $fork
-            ->attach($task1 = new Fixtures\Task\DemoTask())
-            ->attach($task2 = new Fixtures\Task\DemoTask())
-            ->attach($task3 = new Fixtures\Task\DemoTask());
+            ->attach($task1 = new DemoTask())
+            ->attach($task2 = new DemoTask())
+            ->attach($task3 = new DemoTask());
 
         $fork->run();
 

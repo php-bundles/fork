@@ -1,10 +1,10 @@
 <?php
 
-namespace SymfonyBundles\ForkBundle\Tests\Fixtures\Task;
+namespace SymfonyBundles\Tests\Task;
 
-use SymfonyBundles\ForkBundle\Fork\TaskInterface;
+use SymfonyBundles\Fork;
 
-class DemoTask implements TaskInterface
+class DemoTask extends Fork\Task
 {
     private $isExecuted = false;
 
@@ -16,5 +16,9 @@ class DemoTask implements TaskInterface
     public function execute(): void
     {
         $this->isExecuted = true;
+
+        for ($i = 0; $i < 200; $i++) {
+            $this->iterate();
+        }
     }
 }

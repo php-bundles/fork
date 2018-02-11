@@ -1,6 +1,6 @@
 <?php
 
-namespace SymfonyBundles\ForkBundle\Fork;
+namespace SymfonyBundles\Fork;
 
 class Fork implements ForkInterface
 {
@@ -17,8 +17,12 @@ class Fork implements ForkInterface
     /**
      * @param ProcessInterface $process
      */
-    public function __construct(ProcessInterface $process)
+    public function __construct(ProcessInterface $process = null)
     {
+        if (null === $process) {
+            $process = new Process();
+        }
+
         $this->tasks = [];
         $this->process = $process;
     }

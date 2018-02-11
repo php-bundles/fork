@@ -1,5 +1,5 @@
-SymfonyBundlesForkBundle
-========================
+SymfonyBundles Fork Library
+===========================
 
 [![SensioLabsInsight][sensiolabs-insight-image]][sensiolabs-insight-link]
 
@@ -13,56 +13,30 @@ SymfonyBundlesForkBundle
 Installation
 ------------
 
-* Require the bundle with composer:
+Install the library with composer:
 
 ``` bash
-composer require symfony-bundles/fork-bundle
-```
-
-* Enable the bundle in the kernel:
-
-``` php
-public function registerBundles()
-{
-    $bundles = [
-        // ...
-        new SymfonyBundles\ForkBundle\SymfonyBundlesForkBundle(),
-        // ...
-    ];
-    ...
-}
-```
-
-* Configure the ForkBundle in your config.yml (if needed).
-
-Defaults configuration:
-
-``` yml
-sb_fork:
-    class:
-        fork: 'SymfonyBundles\ForkBundle\Service\Fork'
-        process: 'SymfonyBundles\ForkBundle\Service\Process'
+composer require symfony-bundles/fork
 ```
 
 How to use (only cli-mode)
 --------------------------
 
-Gets the fork service:
+Create the fork service:
 
 ``` php
-$fork = $this->getContainer()->get('sb_fork');
+use SymfonyBundles\Fork;
 
-// or `get('fork')`, fork - defaults alias for service
-$fork = $this->getContainer()->get('fork');
+$fork = new Fork();
 ```
 
-Create a task that implements an interface `SymfonyBundles\ForkBundle\Service\TaskInterface`.
+Create a task that implements an interface `SymfonyBundles\Fork\TaskInterface`.
 For example:
 
 ``` php
 namespace AppBundle\Task;
 
-use SymfonyBundles\ForkBundle\Service\TaskInterface;
+use SymfonyBundles\Fork\TaskInterface;
 
 class DemoTask implements TaskInterface
 {
@@ -94,16 +68,16 @@ $fork->attach($task1)->attach($task2)->attach($task3)->run()->wait(); // default
 
 If you call method `wait`, the current process (main) will wait while all child processes will be finished.
 
-[package-link]: https://packagist.org/packages/symfony-bundles/fork-bundle
-[license-link]: https://github.com/symfony-bundles/fork-bundle/blob/master/LICENSE
-[license-image]: https://poser.pugx.org/symfony-bundles/fork-bundle/license
-[testing-link]: https://travis-ci.org/symfony-bundles/fork-bundle
-[testing-image]: https://travis-ci.org/symfony-bundles/fork-bundle.svg?branch=master
-[stable-image]: https://poser.pugx.org/symfony-bundles/fork-bundle/v/stable
-[downloads-image]: https://poser.pugx.org/symfony-bundles/fork-bundle/downloads
+[package-link]: https://packagist.org/packages/symfony-bundles/fork
+[license-link]: https://github.com/symfony-bundles/fork/blob/master/LICENSE
+[license-image]: https://poser.pugx.org/symfony-bundles/fork/license
+[testing-link]: https://travis-ci.org/symfony-bundles/fork
+[testing-image]: https://travis-ci.org/symfony-bundles/fork.svg?branch=master
+[stable-image]: https://poser.pugx.org/symfony-bundles/fork/v/stable
+[downloads-image]: https://poser.pugx.org/symfony-bundles/fork/downloads
 [sensiolabs-insight-link]: https://insight.sensiolabs.com/projects/83639a9c-881b-4738-b3e9-ea304600c900
 [sensiolabs-insight-image]: https://insight.sensiolabs.com/projects/83639a9c-881b-4738-b3e9-ea304600c900/big.png
-[code-coverage-link]: https://scrutinizer-ci.com/g/symfony-bundles/fork-bundle/?branch=master
-[code-coverage-image]: https://scrutinizer-ci.com/g/symfony-bundles/fork-bundle/badges/coverage.png?b=master
-[scrutinizer-code-quality-link]: https://scrutinizer-ci.com/g/symfony-bundles/fork-bundle/?branch=master
-[scrutinizer-code-quality-image]: https://scrutinizer-ci.com/g/symfony-bundles/fork-bundle/badges/quality-score.png?b=master
+[code-coverage-link]: https://scrutinizer-ci.com/g/symfony-bundles/fork/?branch=master
+[code-coverage-image]: https://scrutinizer-ci.com/g/symfony-bundles/fork/badges/coverage.png?b=master
+[scrutinizer-code-quality-link]: https://scrutinizer-ci.com/g/symfony-bundles/fork/?branch=master
+[scrutinizer-code-quality-image]: https://scrutinizer-ci.com/g/symfony-bundles/fork/badges/quality-score.png?b=master
