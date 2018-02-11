@@ -72,6 +72,8 @@ class ProcessTest extends TestCase
         $method = $reflection->getMethod('fork');
         $method->setAccessible(true);
 
+        $process->setCountOfChildProcesses(2);
+
         $this->assertTrue($method->invoke($process));
     }
 }
