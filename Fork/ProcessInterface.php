@@ -19,23 +19,23 @@ interface ProcessInterface
      *
      * @param int $processesCount
      *
-     * @return self
+     * @return ProcessInterface
      */
-    public function setCountOfChildProcesses(int $processesCount): self;
+    public function setCountOfChildProcesses(int $processesCount): ProcessInterface;
 
     /**
      * Forks the currently running process.
      *
      * @param \Closure $closure Callback for the subprocesses
      *
-     * @return self
+     * @return ProcessInterface
      */
-    public function create(\Closure $closure): self;
+    public function create(\Closure $closure): ProcessInterface;
 
     /**
      * Waits while a forked child is alive.
      *
-     * @return self
+     * @return ProcessInterface
      */
-    public function wait(): self;
+    public function wait(): ProcessInterface;
 }

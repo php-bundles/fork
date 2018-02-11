@@ -18,7 +18,7 @@ interface ForkInterface
      *
      * @param TaskInterface $task
      *
-     * @return self
+     * @return ForkInterface
      */
     public function attach(TaskInterface $task): ForkInterface;
 
@@ -27,7 +27,7 @@ interface ForkInterface
      *
      * @param TaskInterface $task
      *
-     * @return self
+     * @return ForkInterface
      */
     public function detach(TaskInterface $task): ForkInterface;
 
