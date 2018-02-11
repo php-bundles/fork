@@ -12,7 +12,7 @@ abstract class Task implements TaskInterface
     /**
      * Performs garbage collection when the iteration limit is reached.
      */
-    protected function iterate(): void
+    protected function iterate()
     {
         static $currentIteration = 0;
 
