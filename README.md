@@ -63,7 +63,9 @@ $task1 = new DemoTask();
 $task2 = new DemoTask();
 $task3 = new DemoTask();
 
-$fork->attach($task1)->attach($task2)->attach($task3)->run()->wait(); // defaults number of subprocesses is 8
+$fork->attach($task1)->attach($task2)->attach($task3);
+$fork->run(); // by default, the optimal number of subprocesses will be determined
+$fork->wait();
 ```
 
 If you call method `wait`, the current process (main) will wait while all child processes will be finished.

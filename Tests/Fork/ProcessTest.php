@@ -47,7 +47,7 @@ class ProcessTest extends TestCase
 
         $process->method('fork')->willReturn(true);
 
-        $filename = '/tmp/symfony-cache/unit-test.create';
+        $filename = '/tmp/symfony-cache-unit-test.create';
 
         file_put_contents($filename, 0);
 
