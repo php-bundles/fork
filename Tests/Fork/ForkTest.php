@@ -10,13 +10,13 @@ class ForkTest extends TestCase
 {
     public function testInterface()
     {
-        $this->assertInstanceOf(Fork\ForkInterface::class, new Fork\Fork(new Fork\Process()));
+        $this->assertInstanceOf(Fork\ForkInterface::class, new Fork\Fork());
     }
 
     public function testTasksPoll()
     {
         $task = new DemoTask();
-        $fork = new Fork\Fork(new Fork\Process());
+        $fork = new Fork\Fork();
 
         $fork->attach(new DemoTask())->attach($task);
 
@@ -24,6 +24,8 @@ class ForkTest extends TestCase
         $this->assertFalse($fork->exists(new DemoTask()));
 
         $this->assertFalse($fork->detach($task)->exists($task));
+
+        gc_disable();
 
         $fork->run();
     }
