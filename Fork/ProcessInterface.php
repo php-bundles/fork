@@ -15,15 +15,6 @@ interface ProcessInterface
     public const AUTO_DETECT_OF_PROCESSES_QUANTITY = -1;
 
     /**
-     * Sets the number of created child processes.
-     *
-     * @param int $processesCount
-     *
-     * @return ProcessInterface
-     */
-    public function setCountOfChildProcesses(int $processesCount): ProcessInterface;
-
-    /**
      * Forks the currently running process.
      *
      * @param \Closure $closure Callback for the subprocesses
@@ -38,4 +29,36 @@ interface ProcessInterface
      * @return ProcessInterface
      */
     public function wait(): ProcessInterface;
+
+    /**
+     * Returns the process ID.
+     *
+     * @return int
+     */
+    public function getPid(): int;
+
+    /**
+     * Checks whether the process alive.
+     *
+     * @param int $pid Process ID
+     *
+     * @return bool
+     */
+    public function isAlive(int $pid): bool;
+
+    /**
+     * Returns the amount of memory allocated to PHP in megabytes.
+     *
+     * @return float
+     */
+    public function getMemoryUsage(): float;
+
+    /**
+     * Sets the number of created child processes.
+     *
+     * @param int $processesCount
+     *
+     * @return ProcessInterface
+     */
+    public function setCountOfChildProcesses(int $processesCount): ProcessInterface;
 }

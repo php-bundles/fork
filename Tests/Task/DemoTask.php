@@ -6,6 +6,8 @@ use SymfonyBundles\Fork;
 
 class DemoTask extends Fork\Task
 {
+    public const GARBAGE_COLLECT_ITERATIONS = 1;
+
     private $isExecuted = false;
 
     public function isExecuted(): bool
@@ -13,7 +15,7 @@ class DemoTask extends Fork\Task
         return $this->isExecuted;
     }
 
-    public function execute()
+    public function execute(Fork\ProcessInterface $process): void
     {
         $this->isExecuted = true;
 
@@ -23,7 +25,7 @@ class DemoTask extends Fork\Task
 
             $this->foo($object);
 
-            $this->collectCycles();
+            $this->garbageCollect();
         }
     }
 
