@@ -17,8 +17,18 @@ class DemoTask extends Fork\Task
     {
         $this->isExecuted = true;
 
-        for ($i = 0; $i < 200; $i++) {
-            $this->iterate();
+        for ($i = 0; $i < 20; ++$i) {
+            $object = new \stdClass();
+            $object->reference = $object;
+
+            $this->foo($object);
+
+            $this->collectCycles();
         }
+    }
+
+    protected function foo(\stdClass &$baz)
+    {
+        $baz->bar = range(0, 100000);
     }
 }

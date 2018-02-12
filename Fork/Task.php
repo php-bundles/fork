@@ -7,12 +7,12 @@ abstract class Task implements TaskInterface
     /**
      * @var int Number of iterations to perform garbage cleaning
      */
-    protected $iterations = 100;
+    public const GARBAGE_COLLECTION_ITERATIONS = 1;
 
     /**
      * Performs garbage collection when the iteration limit is reached.
      */
-    protected function iterate()
+    protected function collectCycles()
     {
         static $currentIteration = 0;
 
@@ -20,7 +20,7 @@ abstract class Task implements TaskInterface
             gc_enable();
         }
 
-        if (++$currentIteration >= $this->iterations) {
+        if (++$currentIteration >= static::GARBAGE_COLLECTION_ITERATIONS) {
             $currentIteration = 0;
 
             gc_collect_cycles();
