@@ -27,7 +27,7 @@ Create the fork service:
 ``` php
 use SymfonyBundles\Fork;
 
-$fork = new Fork();
+$fork = new Fork\Fork();
 ```
 
 Create a task that implements an interface `SymfonyBundles\Fork\TaskInterface`.
