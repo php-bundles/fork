@@ -7,5 +7,5 @@ interface TaskInterface
     /**
      * Executes a task.
      */
-    public function execute();
+    public function execute(ProcessInterface $process): void;
 }

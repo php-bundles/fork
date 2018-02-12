@@ -25,28 +25,6 @@ class Process implements ProcessInterface
     /**
      * {@inheritdoc}
      */
-    public function setCountOfChildProcesses(int $processesCount): ProcessInterface
-    {
-        if ($processesCount < 1) {
-            $processesCount = $this->getOptimalNumberOfChildProcesses();
-        }
-
-        if ($processesCount > static::MAX_PROCESSES_QUANTITY) {
-            $processesCount = static::MAX_PROCESSES_QUANTITY;
-        }
-
-        if ($this->isAllowedFork) {
-            $this->processesCount = $processesCount;
-        } else {
-            $this->processesCount = 1;
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function create(\Closure $closure): ProcessInterface
     {
         for ($i = 0; $i < $this->processesCount; ++$i) {
@@ -67,6 +45,66 @@ class Process implements ProcessInterface
     {
         if ($this->isAllowedFork) {
             pcntl_wait($status);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPid(): int
+    {
+        return getmypid();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
+     */
+    public function isAlive(int $pid): bool
+    {
+        $os = strtolower(trim(PHP_OS));
+
+        switch ($os) {
+            case 'linux':
+                return empty($this->execute(sprintf('kill -0 %d', $pid)));
+            case 'winnt':
+            case 'windows':
+                $output = $this->execute(sprintf('wmic process where processId=%d get processId', $pid));
+
+                return $pid === (int) preg_replace('#[^\d]*#', '', $output);
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMemoryUsage(): float
+    {
+        return round(memory_get_usage(true) / 1024 / 1024, 2);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCountOfChildProcesses(int $processesCount): ProcessInterface
+    {
+        if ($processesCount < 1) {
+            $processesCount = $this->getOptimalNumberOfChildProcesses();
+        }
+
+        if ($processesCount > static::MAX_PROCESSES_QUANTITY) {
+            $processesCount = static::MAX_PROCESSES_QUANTITY;
+        }
+
+        if ($this->isAllowedFork) {
+            $this->processesCount = $processesCount;
+        } else {
+            $this->processesCount = 1;
         }
 
         return $this;
@@ -101,8 +139,6 @@ class Process implements ProcessInterface
     /**
      * Returns the optimal number of child processes.
      *
-     * @codeCoverageIgnore
-     *
      * @return int
      */
     protected function getOptimalNumberOfChildProcesses(): int
@@ -110,15 +146,24 @@ class Process implements ProcessInterface
         $coreNumber = 1;
         $detectCommand = [
             'linux' => 'cat /proc/cpuinfo | grep processor | wc -l',
-            'freebsd' => 'sysctl -a | grep "hw.ncpu" | cut -d ":" -f2',
         ];
 
         $os = strtolower(trim(PHP_OS));
 
         if (isset($detectCommand[$os])) {
-            $coreNumber = intval(trim(shell_exec($detectCommand[$os])));
+            $coreNumber = intval($this->execute($detectCommand[$os]));
         }
 
         return $coreNumber;
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return string
+     */
+    protected function execute(string $command): string
+    {
+        return trim(shell_exec($command));
     }
 }

@@ -76,4 +76,26 @@ class ProcessTest extends TestCase
 
         $this->assertTrue($method->invoke($process));
     }
+
+    public function testIsAliveProcess()
+    {
+        $process = new Fork\Process();
+
+        $this->assertTrue($process->isAlive($process->getPid()));
+    }
+
+    public function testMemoryUsage()
+    {
+        $process = new Fork\Process();
+
+        $startMemoryUsage = $process->getMemoryUsage();
+
+        $list = range(1, 16400);
+
+        $finishMemoryUsage = $process->getMemoryUsage();
+
+        $this->assertCount(16400, $list);
+
+        $this->assertTrue($finishMemoryUsage > $startMemoryUsage + 1);
+    }
 }
