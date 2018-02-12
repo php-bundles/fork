@@ -6,7 +6,7 @@ use SymfonyBundles\Fork;
 
 class DemoTask extends Fork\Task
 {
-    public const GARBAGE_COLLECT_ITERATIONS = 1;
+    public const GARBAGE_COLLECT_ITERATIONS = 5;
 
     private $isExecuted = false;
 
