@@ -1,6 +1,6 @@
 <?php
 
-namespace SymfonyBundles\ForkBundle\Service;
+namespace SymfonyBundles\Fork;
 
 interface TaskInterface
 {
