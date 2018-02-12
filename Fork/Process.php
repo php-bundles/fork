@@ -70,13 +70,11 @@ class Process implements ProcessInterface
         switch ($os) {
             case 'linux':
                 return empty($this->execute(sprintf('kill -0 %d', $pid)));
-                break;
             case 'winnt':
             case 'windows':
                 $output = $this->execute(sprintf('wmic process where processId=%d get processId', $pid));
 
                 return $pid === (int) preg_replace('#[^\d]*#', '', $output);
-                break;
         }
 
         return false;
