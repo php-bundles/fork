@@ -46,4 +46,11 @@ interface ForkInterface
      * @return ProcessInterface
      */
     public function run(int $processesCount = ProcessInterface::AUTO_DETECT_OF_PROCESSES_QUANTITY): ProcessInterface;
+
+    /**
+     * Returns the ProcessInterface instance.
+     *
+     * @return ProcessInterface
+     */
+    public function getProcess(): ProcessInterface;
 }

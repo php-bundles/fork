@@ -38,6 +38,7 @@ class ForkTest extends TestCase
 
         $process->method('fork')->willReturn(true);
 
+        $pid = $process->getPid();
         $fork = new Fork\Fork($process);
 
         $fork
@@ -50,5 +51,7 @@ class ForkTest extends TestCase
         $this->assertTrue($task1->isExecuted());
         $this->assertTrue($task2->isExecuted());
         $this->assertTrue($task3->isExecuted());
+
+        $this->assertSame($pid, $fork->getProcess()->getPid());
     }
 }
