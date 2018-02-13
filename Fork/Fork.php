@@ -30,6 +30,14 @@ class Fork implements ForkInterface
     /**
      * {@inheritdoc}
      */
+    public function getProcess(): ProcessInterface
+    {
+        return $this->process;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function exists(TaskInterface $task): bool
     {
         return false !== in_array($task, $this->tasks, true);
