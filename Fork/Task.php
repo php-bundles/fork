@@ -16,7 +16,7 @@ abstract class Task implements TaskInterface
     {
         static $currentIteration = 0;
 
-        if (false === gc_enabled()) {
+        if (0 === $currentIteration && false === gc_enabled()) {
             gc_enable();
         }
 
