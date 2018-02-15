@@ -15,7 +15,7 @@ class DemoTask extends Fork\Task
         return $this->isExecuted;
     }
 
-    public function execute(Fork\ProcessInterface $process): void
+    public function execute(): void
     {
         $this->isExecuted = true;
 

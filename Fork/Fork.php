@@ -74,7 +74,7 @@ class Fork implements ForkInterface
     {
         return function () {
             foreach ($this->tasks as $task) {
-                $task->execute($this->process);
+                $task->execute();
             }
         };
     }
