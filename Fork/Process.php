@@ -19,7 +19,15 @@ class Process implements ProcessInterface
      */
     public function __construct()
     {
-        $this->isAllowedFork = function_exists('pcntl_fork');
+        $this->setIsAllowedFork(function_exists('pcntl_fork'));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setIsAllowedFork(bool $isAllowedFork): void
+    {
+        $this->isAllowedFork = $isAllowedFork;
     }
 
     /**

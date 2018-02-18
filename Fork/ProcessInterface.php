@@ -15,6 +15,13 @@ interface ProcessInterface
     public const AUTO_DETECT_OF_PROCESSES_QUANTITY = -1;
 
     /**
+     * Sets the task execution mode.
+     *
+     * @param bool $isAllowedFork If TRUE - tasks are performed in child processes, otherwise - in the current process
+     */
+    public function setIsAllowedFork(bool $isAllowedFork): void;
+
+    /**
      * Forks the currently running process.
      *
      * @param \Closure $closure Callback for the subprocesses
