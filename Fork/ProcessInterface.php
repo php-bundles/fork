@@ -17,9 +17,9 @@ interface ProcessInterface
     /**
      * Sets the task execution mode.
      *
-     * @param bool $isAllowedFork If TRUE - tasks are performed in child processes, otherwise - in the current process
+     * @param bool $allowedFork If TRUE - tasks are performed in child processes, otherwise - in the current process
      */
-    public function setIsAllowedFork(bool $isAllowedFork): void;
+    public function setAllowedFork(bool $allowedFork): void;
 
     /**
      * Forks the currently running process.
