@@ -73,19 +73,7 @@ class Process implements ProcessInterface
      */
     public function isAlive(int $pid): bool
     {
-        $os = strtolower(trim(PHP_OS));
-
-        switch ($os) {
-            case 'linux':
-                return empty($this->execute(sprintf('kill -0 %d', $pid)));
-            case 'winnt':
-            case 'windows':
-                $output = $this->execute(sprintf('wmic process where processId=%d get processId', $pid));
-
-                return $pid === (int) preg_replace('#[^\d]*#', '', $output);
-        }
-
-        return false;
+        return posix_kill($pid, 0);
     }
 
     /**
