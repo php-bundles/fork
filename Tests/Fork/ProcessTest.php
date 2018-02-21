@@ -20,16 +20,16 @@ class ProcessTest extends TestCase
         $processesCount = $reflection->getProperty('processesCount');
         $processesCount->setAccessible(true);
 
-        $isAllowedFork = $reflection->getProperty('isAllowedFork');
-        $isAllowedFork->setAccessible(true);
-        $isAllowedFork->getValue($process);
+        $allowedFork = $reflection->getProperty('allowedFork');
+        $allowedFork->setAccessible(true);
+        $allowedFork->getValue($process);
 
         $process->setCountOfChildProcesses(1);
         $this->assertSame(1, $processesCount->getValue($process));
 
         $process->setCountOfChildProcesses(Fork\ProcessInterface::MAX_PROCESSES_QUANTITY + 1);
 
-        if ($isAllowedFork->getValue($process)) {
+        if ($allowedFork->getValue($process)) {
             $this->assertSame(Fork\ProcessInterface::MAX_PROCESSES_QUANTITY, $processesCount->getValue($process));
         } else {
             $this->assertSame(1, $processesCount->getValue($process));
@@ -65,7 +65,7 @@ class ProcessTest extends TestCase
         $process = new Fork\Process();
         $reflection = new \ReflectionObject($process);
 
-        $property = $reflection->getProperty('isAllowedFork');
+        $property = $reflection->getProperty('allowedFork');
         $property->setAccessible(true);
         $property->setValue($process, false);
 

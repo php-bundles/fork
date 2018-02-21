@@ -7,7 +7,7 @@ class Process implements ProcessInterface
     /**
      * @var bool
      */
-    protected $isAllowedFork;
+    protected $allowedFork;
 
     /**
      * @var int
@@ -19,15 +19,15 @@ class Process implements ProcessInterface
      */
     public function __construct()
     {
-        $this->setIsAllowedFork(function_exists('pcntl_fork'));
+        $this->setAllowedFork(function_exists('pcntl_fork'));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setIsAllowedFork(bool $isAllowedFork): void
+    public function setAllowedFork(bool $allowedFork): void
     {
-        $this->isAllowedFork = $isAllowedFork;
+        $this->allowedFork = $allowedFork;
     }
 
     /**
@@ -51,7 +51,7 @@ class Process implements ProcessInterface
      */
     public function wait(): ProcessInterface
     {
-        if ($this->isAllowedFork) {
+        if ($this->allowedFork) {
             pcntl_wait($status);
         }
 
@@ -97,7 +97,7 @@ class Process implements ProcessInterface
             $processesCount = static::MAX_PROCESSES_QUANTITY;
         }
 
-        if ($this->isAllowedFork) {
+        if ($this->allowedFork) {
             $this->processesCount = $processesCount;
         } else {
             $this->processesCount = 1;
@@ -111,7 +111,7 @@ class Process implements ProcessInterface
      */
     protected function fork(): bool
     {
-        if ($this->isAllowedFork) {
+        if ($this->allowedFork) {
             return 0 === pcntl_fork();
         }
 
@@ -125,7 +125,7 @@ class Process implements ProcessInterface
      */
     protected function terminate(): bool
     {
-        if ($this->isAllowedFork) {
+        if ($this->allowedFork) {
             return posix_kill(getmypid(), SIGKILL);
         }
 
