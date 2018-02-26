@@ -73,6 +73,12 @@ class Process implements ProcessInterface
      */
     public function isAlive(int $pid): bool
     {
+        if (0 === strncasecmp(PHP_OS, 'win', 3)) {
+            exec(sprintf('TASKLIST /FO LIST /FI "PID eq %d"', $pid), $info);
+
+            return count($info) > 1;
+        }
+
         return posix_kill($pid, 0);
     }
 
